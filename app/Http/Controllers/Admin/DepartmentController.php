@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Spatie\Permission\Traits\HasRoles;
 
 class DepartmentController extends Controller
 {
+    use HasRoles;
     /**
      * Display a listing of the resource.
      */
+    // public function __construct(){
+    //     $this->middleware('role:فتح مواسسة');
+    // }
     public function index()
     {
         $department = Department::all();

@@ -1,0 +1,121 @@
+#### 3. إعداد نموذج User
+
+أضف السمة `HasRoles` إلى نموذج المستخدم (`User`):
+
+```php
+use Spatie\Permission\Traits\HasRoles;
+
+class User extends Authenticatable
+{
+    use HasRoles;
+
+    // باقي الكود...
+}
+```
+
+#### 4. تعريف الأدوار والصلاحيات
+
+يمكنك إنشاء الأدوار والصلاحيات إما في Seeder أو مباشرة في الكود:
+
+```php
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+// إنشاء الأدوار
+$institution = Role::create(['name' => 'institution']);
+$association = Role::create(['name' => 'association']);
+$representative = Role::create(['name' => 'representative']);
+$collector = Role::create(['name' => 'collector']);
+
+// إنشاء الصلاحيات
+Permission::create(['name' => 'manage deliveries']);
+Permission::create(['name' => 'view reports']);
+
+// ربط الصلاحيات بالأدوار
+$institution->givePermissionTo('manage deliveries');
+$association->givePermissionTo('view reports');
+```
+
+#### 5. ربط المستخدمين بالأدوار
+
+يمكنك ربط الأدوار بالمستخدمين كالتالي:
+
+```php
+$user = User::find(1);
+$user->assignRole('institution');
+
+// أو يمكنك استخدام الأدوار مباشرة
+$user->roles()->attach($institution->id);
+```
+
+#### 6. استخدام الصلاحيات في التحكم بالوصول
+
+يمكنك استخدام الصلاحيات للتحكم بالوصول إلى أجزاء مختلفة من التطبيق. على سبيل المثال، في التحكم بالموجهات (routes) أو في بوابات (gates):
+
+في ملف `web.php` للموجهات:
+
+```php
+Route::group(['middleware' => ['role:institution']], function () {
+    Route::get('/institution-dashboard', [InstitutionController::class, 'index']);
+});
+```
+
+في بوابات الوصول (Gates) في ملف `AuthServiceProvider.php`:
+
+```php
+use Illuminate\Support\Facades\Gate;
+
+public function boot()
+{
+    $this->registerPolicies();
+
+    Gate::define('manage-deliveries', function ($user) {
+        return $user->hasPermissionTo('manage deliveries');
+    });
+}
+```
+
+ثم يمكنك استخدام Gate في وحدة التحكم (Controller) للتحكم في الوصول:
+
+```php
+public function manageDeliveries()
+{
+    if (! Gate::allows('manage-deliveries')) {
+        abort(403);
+    }
+
+    // الكود الخاص بإدارة التوصيلات
+}
+```
+
+### تخصيص الإشعارات وسجل الأنشطة بناءً على الأدوار
+
+يمكنك تخصيص الإشعارات وسجل الأنشطة بسهولة باستخدام نظام الأدوار. مثلاً:
+
+#### إرسال الإشعارات بناءً على الأدوار:
+
+```php
+use App\Notifications\GeneralNotification;
+
+$user = auth()->user();
+if ($user->hasRole('institution')) {
+    $user->notify(new GeneralNotification('Institution-specific message'));
+} elseif ($user->hasRole('association')) {
+    $user->notify(new GeneralNotification('Association-specific message'));
+}
+```
+
+#### تسجيل الأنشطة بناءً على الأدوار:
+
+```php
+use App\Models\ActivityLog;
+
+$user = auth()->user();
+ActivityLog::create([
+    'user_id' => $user->id,
+    'activity' => 'Some activity',
+    'description' => $user->hasRole('institution') ? 'Activity by institution' : 'Activity by other role',
+]);
+```
+
+بهذه الطريقة، ستتمكن من إدارة الأدوار والصلاحيات بكفاءة ومرونة، وتخصيص الإشعارات وسجل الأنشطة بناءً على احتياجات النظام الخاص بك.
