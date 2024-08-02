@@ -18,5 +18,6 @@ class DepartmentSeeder extends Seeder
             'name'=>'',
             'description'=>'',
         ]);
+        
     }
 }
