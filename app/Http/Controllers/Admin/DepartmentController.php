@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -12,8 +13,9 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return view('admin.page.departments.index',[
-            'departments' =>[]
+        $department = Department::all();
+        return view('admin.page.departments.index', [
+            'departments' => $department
         ]);
     }
 

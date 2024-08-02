@@ -52,11 +52,11 @@
                                                 class="btn btn-info btn-sm" role="button" aria-pressed="true"
                                                 title="تعديل"><i class="fa fa-edit"></i></a>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#delete_departments{{ $departments['id'] }}" title="حذف"><i
+                                                data-target="#delete_departments{{ $department['id'] }}" title="حذف"><i
                                                     class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
-                                    @include('page.departments.destroy')
+                                    @include('admin.page.departments.destroy')
                                 @empty
                                     <tr>
                                         <td colspan="4">لا توجد بيانات</td>

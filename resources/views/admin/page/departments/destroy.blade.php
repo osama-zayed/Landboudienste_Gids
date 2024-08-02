@@ -7,7 +7,7 @@
            <div class="modal-content">
                <div class="modal-header">
                    <h5 style="font-family: 'Cairo', sans-serif;"
-                       class="modal-title" id="exampleModalLabel">حذف مركز شرطة</h5>
+                       class="modal-title" id="exampleModalLabel">حذف اداراه</h5>
                    <button type="button" class="close" data-dismiss="modal"
                            aria-label="Close">
                        <span aria-hidden="true">&times;</span>
