@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 @section('css')
     <div style="display: none">@toastr_css</div>
 @endsection
@@ -24,7 +24,7 @@
                     <div class="col-xs-12">
                         <div class="col-md-12">
                             <br>
-                            <form action="{{ route('user.store') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('users.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-row">
                                     <div class="col">
@@ -73,50 +73,6 @@
                                         <input type="password" name="password_confirmation" class="form-control mr-sm-2"
                                             autocomplete="" value="{{ old('password_confirmation') }}"
                                             required="الحقل مطلوب">
-                                    </div>
-                                </div><br>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="Grade_id">حالة المستخدم : <span class="text-danger">*
-                                                    @error('user_status')
-                                                        {{ $message }}
-                                                    @enderror
-                                                </span></label>
-                                            <select id="department_select" class="custom-select mr-sm-2" name="user_status">
-                                                <option value="1" selected>مفعل</option>
-                                                <option value="0">مجمد</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="Grade_id">القسم : <span class="text-danger">*
-                                                    @error('department_id')
-                                                        {{ $message }}
-                                                    @enderror
-                                                </span></label>
-                                            <select id="department_select" class="custom-select mr-sm-2"
-                                                name="department_id">
-                                                <option value="" disabled selected>اختر قسم</option>
-                                                @foreach (\App\Models\department::get() as $department)
-                                                    <option value="{{ $department->id }}">
-                                                        {{ $department->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <label for="Classroom_id">الصلاحية : <span class="text-danger">*</span></label>
-                                        <select id="user_type" class="custom-select mr-sm-2" name="user_type" multiple required>
-                                            <option value="user" >مستخدم</option>
-                                            <option value="admin">ادمن</option>
-                                            <option value="incidentOfficer">مسوؤل بلاغات</option>
-                                            <option value="statisticOfficer">موظف الإحصاء</option>
-                                        </select>
                                     </div>
                                 </div>
                                 <br>

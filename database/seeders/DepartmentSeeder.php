@@ -13,11 +13,11 @@ class DepartmentSeeder extends Seeder
      */
     public function run(): void
     {
-        // Department::factory(10)->create();
-        Department::create([
-            'name'=>'',
-            'description'=>'',
-        ]);
+        Department::factory(10)->create();
+        // Department::create([
+        //     'name'=>'',
+        //     'description'=>'',
+        // ]);
         
     }
 }

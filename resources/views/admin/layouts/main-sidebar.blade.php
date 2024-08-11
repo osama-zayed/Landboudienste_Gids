@@ -31,34 +31,25 @@
                             <div class="clearfix"></div>
                         </a>
                     </li>
-                    {{-- 
                     <!-- menu title -->
-                    <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الادارات</li>
+                    <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">المستخدمين</li>
                     <!-- menu item Incidents-->
                     
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#Incidents">
                             <div class="pull-left"><i class="fa fa-bar-chart-o highlight-icon"></i><span
-                                    class="right-nav-text">البلاغات</span></div>
+                                    class="right-nav-text">المستخدمين</span></div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="Incidents" class="collapse" data-parent="#sidebarnav">
-                            <li><a href="{{ route('Incident.index') }}">عرض البلاغات</a></li>
-                            <li><a href="{{ route('Incident.create') }}">اضافة بلاغ</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'أولي']) }}">البلاغات
-                                    الأولية</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'تكميلي']) }}">البلاغات
-                                    التكميلية</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'محول']) }}">البلاغات
-                                    المحولة</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'مشيك']) }}">البلاغات
-                                    المشيكة</a></li>
-                            <li><a href="{{ route('Incident.index', ['incident_status' => 'وهمي']) }}">البلاغات
-                                    الوهمية</a></li>
-                            <li><a href="{{ route('Incident_deleted') }}">ارشيف البلاغات</a></li>
+                            <li><a href="{{ route('users.index') }}">عرض المستخدمين</a></li>
+                            <li><a href="{{ route('users.create') }}">اضافة مستخدم</a></li>
+                            
                         </ul>
                     </li>
+                    {{-- 
+
                     <!-- menu item Department-->
                     <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">التقارير</li>
 

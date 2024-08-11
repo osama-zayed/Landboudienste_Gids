@@ -14,4 +14,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix('admin')->group(function () {
     Route::get('/', [Admin\HomeController::class, 'index'])->name('home');
     Route::resource('/departments', Admin\DepartmentController::class);
+    Route::resource('/users', Admin\UserController::class);
 });
