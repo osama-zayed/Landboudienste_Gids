@@ -9,7 +9,6 @@
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5",
-        "mpdf/mpdf": "^8.2",
         "php-flasher/flasher-laravel": "^2.0",
         "spatie/laravel-activitylog": "^4.8",
         "spatie/laravel-permission": "^6.9"
