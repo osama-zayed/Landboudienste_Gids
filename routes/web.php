@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
+use App\Models\Permission;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.page.dashboard');
 });
 
 Auth::routes();

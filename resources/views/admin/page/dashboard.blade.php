@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('content')
     <!-- main-content -->
-    <div class="content-wrapper">
+    {{-- <div class="content-wrapper">
         <div class="page-title">
             <div class="row">
                 <div class="col-sm-6">
@@ -151,5 +151,5 @@
             </div>
 
         </div>
-    </div>
+    </div> --}}
 @endsection

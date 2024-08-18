@@ -75,6 +75,20 @@
                                             required="الحقل مطلوب">
                                     </div>
                                 </div>
+
+                                <div class="form-row mt-5 ">
+                                    @foreach ($permissions as $permission)
+                                        <div class="col-lg-4 mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="permission" id="permission_{{ $permission->id }}" value="{{ $permission->id }}" required>
+                                                <label class="form-check-label" for="permission_{{ $permission->id }}">
+                                                    {{ $permission->name }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
                                 <br>
                                 <button class="btn btn-primary btn-sm nextBtn btn-lg pull-right" type="submit">حفظ
                                     البيانات</button>
