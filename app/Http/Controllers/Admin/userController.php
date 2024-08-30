@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Spatie\Activitylog\Models\Activity;
-
+use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
     public function __construct()
@@ -91,10 +91,12 @@ class UserController extends Controller
     public function edit(User $user)
     {
         // dd($user->);
+        $userPermissions = $user->getDirectPermissions()->pluck('name')->toArray();
         $permissions = Permission::all();
         return view("admin.page.users.edit", [
             'permissions' => $permissions,
-            'user' => $user
+            'user' => $user,
+            'userPermissions' =>$userPermissions 
         ]);
     }
 
@@ -103,25 +105,31 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-
         // التحقق من صحة البيانات المدخلة
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users')->ignore($user->id),
+            ],
             'password' => 'nullable|string|min:8|confirmed',
             'permission' => 'array', // التأكد من أن الصلاحيات هي مصفوفة
             'permissions.*' => 'string|exists:permissions,name', // التأكد من أن كل عنصر في المصفوفة موجود
-        ], []);
+        ]);
 
         // استخدام معاملة لضمان التكامل
         DB::transaction(function () use ($validatedData, $user) {
             // إنشاء المستخدم الجديد
-            $user->update([
-                'name' => $validatedData['name'],
-                'email' => $validatedData['email'],
-                'password' => bcrypt($validatedData['password']) ?? $user->password,
-            ]);
 
+            $user->name =  $validatedData['name'];
+            $user->email =  $validatedData['email'];
+            if (isset($validatedData['password']) && !empty($validatedData['password'])) {
+                $user->password =  bcrypt($validatedData['password']);
+            }
+            $user->save();
             // ربط المستخدم بالصلاحيات إذا كانت موجودة
             if (isset($validatedData['permission'])) {
                 foreach ($validatedData['permission'] as $permissionName) {

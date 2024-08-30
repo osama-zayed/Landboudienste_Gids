@@ -60,8 +60,7 @@
                                                 @enderror
                                             </span>
                                         </label>
-                                        <input type="password" name="password" class="form-control mr-sm-2"
-                                            value="{{ $user->password }}">
+                                        <input type="password" name="password" class="form-control mr-sm-2">
                                     </div>
 
                                     <div class="col">
@@ -73,16 +72,22 @@
                                             </span>
                                         </label>
                                         <input type="password" name="password_confirmation" class="form-control mr-sm-2"
-                                            autocomplete="" value="{{ $user->password }}" >
+                                            autocomplete="">
                                     </div>
                                 </div>
 
+
                                 <div class="form-row mt-5 ">
+                                    @error('permission')
+                                        {{ $message }}
+                                    @enderror
                                     @foreach ($permissions as $permission)
                                         <div class="col-lg-4 mb-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="permission"
-                                                    id="permission_{{ $permission->id }}" value="{{ $permission->id }}">
+                                                <input class="form-check-input" type="checkbox"
+                                                    name="permission[{{ $permission->id }}]"
+                                                    id="permission_{{ $permission->id }}" value="{{ $permission->name }}"
+                                                    multiple @if (in_array($permission->name, $userPermissions)) checked @endif>
                                                 <label class="form-check-label" for="permission_{{ $permission->id }}">
                                                     {{ $permission->name }}
                                                 </label>
