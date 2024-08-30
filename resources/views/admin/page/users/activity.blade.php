@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 @section('css')
     <div style="display: none">@toastr_css</div>
 @endsection
