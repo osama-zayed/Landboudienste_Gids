@@ -35,6 +35,8 @@
                                     <th>#</th>
                                     <th>الاسم</th>
                                     <th>الايميل</th>
+                                    <th>حالة الحساب</th>
+
                                     <th>العمليات</th>
                                 </tr>
                             </thead>
@@ -44,6 +46,19 @@
                                             <td>{{ $user['id'] }}</td>
                                             <td>{{ $user['name'] }}</td>
                                             <td>{{ $user['email'] }}</td>
+                                            <td>
+                                                @if ($user['user_status'])
+                                                    <button type="button" class="btn btn-success btn-sm"
+                                                        data-toggle="modal"
+                                                        data-target="#DisableUser{{ $user['id'] }}"
+                                                        title="تجميد المستخدم"> يعمل </button>
+                                                @else
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                        data-toggle="modal"
+                                                        data-target="#EnableUser{{ $user['id'] }}"
+                                                        title="تشغيل المستخدم">لا يعمل</button>
+                                                @endif
+                                            </td>
                                             <td>
                                                 <a href="{{ route('users.show', $user['id']) }}"
                                                     class="btn btn-success btn-sm" role="button" aria-pressed="true"
