@@ -77,10 +77,16 @@
                                 </div>
 
                                 <div class="form-row mt-5 ">
+                                    @error('permission')
+                                        {{ $message }}
+                                    @enderror
                                     @foreach ($permissions as $permission)
                                         <div class="col-lg-4 mb-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="permission" id="permission_{{ $permission->id }}" value="{{ $permission->id }}" required>
+                                                <input class="form-check-input" type="checkbox"
+                                                    name="permission[{{ $permission->id }}]"
+                                                    id="permission_{{ $permission->id }}" value="{{ $permission->name }}"
+                                                    multiple>
                                                 <label class="form-check-label" for="permission_{{ $permission->id }}">
                                                     {{ $permission->name }}
                                                 </label>
