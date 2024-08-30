@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Validation\Rule;
+
 class UserController extends Controller
 {
     public function __construct()
@@ -83,7 +84,34 @@ class UserController extends Controller
      * Display the specified resource.
      */
 
-    public function show(User $user) {}
+    public function show(string $id)
+    {
+        try {
+            $pageSize = 500;
+            $page = request()->input('page', 1);
+            if ($page < 1) $page = 1;
+            $skip = ($page - 1) * $pageSize;
+            $totalData = Activity::where('causer_id', $id)->count();
+            $totalPages = ceil($totalData / $pageSize);
+
+            $data = Activity::where('causer_id', $id)->get()->reverse()->skip($skip)->take($pageSize);
+            //  if ($data->isEmpty()) {
+            //      toastr()->error('لا يوجد بيانات');
+            //  }
+            return view('admin.page.users.activity', [
+                'data' => $data,
+                "page" => $page,
+                "totalPages" => $totalPages,
+            ]);
+        } catch (Exception $e) {
+            //  toastr()->error('خطأ عند جلب البيانات');
+            return view('admin.page.users.activity', [
+                'data' => [],
+                "page" => $page,
+                "totalPages" => $totalPages,
+            ]);
+        }
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -96,7 +124,7 @@ class UserController extends Controller
         return view("admin.page.users.edit", [
             'permissions' => $permissions,
             'user' => $user,
-            'userPermissions' =>$userPermissions 
+            'userPermissions' => $userPermissions
         ]);
     }
 
