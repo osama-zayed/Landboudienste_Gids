@@ -65,18 +65,9 @@ class UserController extends Controller
              ]);
      
              // ربط المستخدم بالصلاحيات إذا كانت موجودة
-             if (isset($validatedData['permissions'])) {
-                foreach ($validatedData['permissions'] as $permissionName) {
-                    dd($permissionName);
-                    // جلب الصلاحية من قاعدة البيانات
-                    $permission = Permission::where('name', $permissionName)->first();
-    
-                    // التأكد من أن الصلاحية موجودة
-                    if ($permission) {
-                        $user->givePermissionTo($permission);
-                    } else {
-                        Log::error("Permission '{$permissionName}' not found in database.");
-                    }
+             if (isset($validatedData['permission'])) {
+                foreach ($validatedData['permission'] as $permissionName) {
+                    $user->givePermissionTo($permissionName);
                 }
             }
          });
